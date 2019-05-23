@@ -1,0 +1,350 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Snippets API",
+    "description": "Test description",
+    "termsOfService": "https://www.google.com/policies/terms/",
+    "contact": { "email": "contact@snippets.local" },
+    "license": { "name": "BSD License" },
+    "version": "v1"
+  },
+  "host": "127.0.0.1:8001",
+  "schemes": ["http"],
+  "basePath": "/api/rest-auth",
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": { "Basic": { "type": "basic" } },
+  "security": [{ "Basic": [] }],
+  "paths": {
+    "/login/": {
+      "post": {
+        "operationId": "login_create",
+        "description": "Check the credentials and return the REST Token\nif the credentials are valid and authenticated.\nCalls Django Auth login method to register User ID\nin Django session framework\n\nAccept the following POST parameters: username, password\nReturn the REST Framework Token Object's key.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Login" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/Login" }
+          }
+        },
+        "tags": ["login"]
+      },
+      "parameters": []
+    },
+    "/logout/": {
+      "get": {
+        "operationId": "logout_list",
+        "summary": "Calls Django logout method and delete the Token object\nassigned to the current User object.",
+        "description": "Accepts/Returns nothing.",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["logout"]
+      },
+      "post": {
+        "operationId": "logout_create",
+        "summary": "Calls Django logout method and delete the Token object\nassigned to the current User object.",
+        "description": "Accepts/Returns nothing.",
+        "parameters": [],
+        "responses": { "201": { "description": "" } },
+        "tags": ["logout"]
+      },
+      "parameters": []
+    },
+    "/password/change/": {
+      "post": {
+        "operationId": "password_change_create",
+        "summary": "Calls Django Auth SetPasswordForm save method.",
+        "description": "Accepts the following POST parameters: new_password1, new_password2\nReturns the success/fail message.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PasswordChange" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/PasswordChange" }
+          }
+        },
+        "tags": ["password"]
+      },
+      "parameters": []
+    },
+    "/password/reset/": {
+      "post": {
+        "operationId": "password_reset_create",
+        "summary": "Calls Django Auth PasswordResetForm save method.",
+        "description": "Accepts the following POST parameters: email\nReturns the success/fail message.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PasswordReset" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/PasswordReset" }
+          }
+        },
+        "tags": ["password"]
+      },
+      "parameters": []
+    },
+    "/password/reset/confirm/": {
+      "post": {
+        "operationId": "password_reset_confirm_create",
+        "summary": "Password reset e-mail link is confirmed, therefore\nthis resets the user's password.",
+        "description": "Accepts the following POST parameters: token, uid,\n    new_password1, new_password2\nReturns the success/fail message.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PasswordResetConfirm" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/PasswordResetConfirm" }
+          }
+        },
+        "tags": ["password"]
+      },
+      "parameters": []
+    },
+    "/registration/": {
+      "post": {
+        "operationId": "registration_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Register" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/Register" }
+          }
+        },
+        "tags": ["registration"]
+      },
+      "parameters": []
+    },
+    "/registration/verify-email/": {
+      "post": {
+        "operationId": "registration_verify-email_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/VerifyEmail" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/VerifyEmail" }
+          }
+        },
+        "tags": ["registration"]
+      },
+      "parameters": []
+    },
+    "/user/": {
+      "get": {
+        "operationId": "user_read",
+        "summary": "Reads and updates UserModel fields\nAccepts GET, PUT, PATCH methods.",
+        "description": "Default accepted fields: username, first_name, last_name\nDefault display fields: pk, username, email, first_name, last_name\nRead-only fields: pk, email\n\nReturns UserModel fields.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/UserDetails" }
+          }
+        },
+        "tags": ["user"]
+      },
+      "put": {
+        "operationId": "user_update",
+        "summary": "Reads and updates UserModel fields\nAccepts GET, PUT, PATCH methods.",
+        "description": "Default accepted fields: username, first_name, last_name\nDefault display fields: pk, username, email, first_name, last_name\nRead-only fields: pk, email\n\nReturns UserModel fields.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/UserDetails" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/UserDetails" }
+          }
+        },
+        "tags": ["user"]
+      },
+      "patch": {
+        "operationId": "user_partial_update",
+        "summary": "Reads and updates UserModel fields\nAccepts GET, PUT, PATCH methods.",
+        "description": "Default accepted fields: username, first_name, last_name\nDefault display fields: pk, username, email, first_name, last_name\nRead-only fields: pk, email\n\nReturns UserModel fields.",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/UserDetails" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": { "$ref": "#/definitions/UserDetails" }
+          }
+        },
+        "tags": ["user"]
+      },
+      "parameters": []
+    }
+  },
+  "definitions": {
+    "Login": {
+      "required": ["password"],
+      "type": "object",
+      "properties": {
+        "username": { "title": "Username", "type": "string" },
+        "email": { "title": "Email", "type": "string", "format": "email" },
+        "password": { "title": "Password", "type": "string", "minLength": 1 }
+      }
+    },
+    "PasswordChange": {
+      "required": ["new_password1", "new_password2"],
+      "type": "object",
+      "properties": {
+        "new_password1": {
+          "title": "New password1",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "new_password2": {
+          "title": "New password2",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        }
+      }
+    },
+    "PasswordReset": {
+      "required": ["email"],
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "minLength": 1
+        }
+      }
+    },
+    "PasswordResetConfirm": {
+      "required": ["new_password1", "new_password2", "uid", "token"],
+      "type": "object",
+      "properties": {
+        "new_password1": {
+          "title": "New password1",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "new_password2": {
+          "title": "New password2",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "uid": { "title": "Uid", "type": "string", "minLength": 1 },
+        "token": { "title": "Token", "type": "string", "minLength": 1 }
+      }
+    },
+    "Register": {
+      "required": ["username", "password1", "password2"],
+      "type": "object",
+      "properties": {
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "maxLength": 150,
+          "minLength": 1
+        },
+        "email": {
+          "title": "Email",
+          "type": "string",
+          "format": "email",
+          "minLength": 1
+        },
+        "password1": { "title": "Password1", "type": "string", "minLength": 1 },
+        "password2": { "title": "Password2", "type": "string", "minLength": 1 }
+      }
+    },
+    "VerifyEmail": {
+      "required": ["key"],
+      "type": "object",
+      "properties": {
+        "key": { "title": "Key", "type": "string", "minLength": 1 }
+      }
+    },
+    "UserDetails": {
+      "required": ["username"],
+      "type": "object",
+      "properties": {
+        "pk": { "title": "ID", "type": "integer", "readOnly": true },
+        "username": {
+          "title": "Username",
+          "description": "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+          "type": "string",
+          "pattern": "^[\\w.@+-]+$",
+          "maxLength": 150,
+          "minLength": 1
+        },
+        "email": {
+          "title": "Email address",
+          "type": "string",
+          "format": "email",
+          "readOnly": true,
+          "minLength": 1
+        },
+        "first_name": {
+          "title": "First name",
+          "type": "string",
+          "maxLength": 30
+        },
+        "last_name": {
+          "title": "Last name",
+          "type": "string",
+          "maxLength": 150
+        }
+      }
+    }
+  }
+}
